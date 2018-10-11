@@ -1,0 +1,11 @@
+tests
+examples
+node_modules
+.envrc
+.gitignore
+jest.config.js
+tsconfig.json
+webpack.config.js
+.circleci
+yarn.lock
+.npmignore
