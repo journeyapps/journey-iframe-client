@@ -1,0 +1,21 @@
+{
+  "name": "journey-iframe-client",
+  "version": "0.1.0",
+  "main": "./dist/bundle.js",
+  "typings": "./dist/@types/src/index",
+  "repository": "git@github.com:journeyapps/journey-iframe-client.git",
+  "author": "JourneyApps",
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@types/jest": "^23.3.4",
+    "jest": "^23.6.0",
+    "ts-jest": "^23.10.4",
+    "ts-loader": "^5.2.1",
+    "typescript": "^3.0.3",
+    "webpack": "^4.20.2",
+    "webpack-cli": "^3.1.1"
+  },
+  "dependencies": {}
+}

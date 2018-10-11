@@ -1,0 +1,68 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/circulate
+    docker:
+      - image: circleci/node:8.1.2-browsers
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - modules-{{ checksum "yarn.lock" }}
+      - run: echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" > .npmrc
+      - run: yarn install --check-files --frozen-lockfile || yarn install --check-files --frozen-lockfile || yarn install --check-files --frozen-lockfile
+      - run: ./node_modules/.bin/webpack --mode=production
+      - save_cache:
+          key: modules-{{ checksum "yarn.lock" }}
+          paths:
+            - node_modules
+            - ~/.yarn-cache
+      - run: yarn test
+  publish:
+    working_directory: ~/circulate
+    docker:
+      - image: circleci/node:8.1.2
+    environment:
+    steps:
+      - checkout
+      - run:
+          name: Setup NPM
+          command: |
+            echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" > .npmrc
+      - restore_cache:
+          keys:
+            - modules-{{ checksum "yarn.lock" }}
+      - run: yarn install --check-files --frozen-lockfile || yarn install --check-files --frozen-lockfile || yarn install --check-files --frozen-lockfile
+      - run: ./node_modules/.bin/webpack --mode=production
+      - run:
+          name: Publish
+          command: |
+            if [[ "$CIRCLE_TAG" =~ ^v[0-9]*\.[0-9]*\.[0-9]*$ ]]; then
+              echo "Release $CIRCLE_TAG"
+              npm publish
+            else
+              echo "Prerelease $CIRCLE_TAG"
+              npm publish --tag next
+            fi
+
+workflows:
+  version: 2
+  test-and-publish:
+    jobs:
+      # Always build
+      - build:
+          filters:
+            tags:
+              # Build version tags in addition to normal branches
+              only: /^v.*/
+      - publish:
+          requires:
+            # Build before publishing
+            - build
+          filters:
+            tags:
+              # Only publish version tags
+              only: /^v.*/
+            branches:
+              # Don't publish any branches
+              ignore: /.*/
