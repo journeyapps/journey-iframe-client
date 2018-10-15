@@ -31,6 +31,10 @@ component.html().on('sum', function(p1, p2) {
 });
 ```
 
+
+
+> *Note*: `.on` handlers can be initialized anywhere in your view's JS, as long as it happens before messages are posted to them. If you need the handler ready from the view's initialization, initialize them in the view's `init()` function.
+
 ### Receiving messages
 
 ```javascript
@@ -38,20 +42,22 @@ component.html().on('sum', function(p1, p2) {
 
 let client = new JourneyIFrameClient();
 
-let magicValue;
+let tasks;
 
-client.on('set-value', function(value) {
-  magicValue = value;
+client.on('sendTasksToClient', function(value) {
+  tasks = value;
 });
 ```
 
 ```javascript
 // In your view's JS
 
-function setMagicValue() {
-  component.html().post('set-value', magicValue);
+function sendTasksToClient() {
+  component.html().post('sendTasksToClient', getTasksToSend());
 }
 ```
+
+> *Known limitation*: `.post` cannot be called from your view's `init()` function, since the HTML component has not been initialized yet.
 
 ## Methods
 
@@ -81,3 +87,5 @@ yarn test
 yarn version # This sets the new version in package.json and creates a tag
 git push origin master --tags # CircleCI will take care of the rest
 ```
+
+
