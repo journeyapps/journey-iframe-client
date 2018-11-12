@@ -23,7 +23,8 @@ test('We can send a command and params to the window parent', async () => {
   CASES.forEach(params => {
     expect(wpmpInstance.postMessage).toHaveBeenCalledWith(window.parent, {
       command: COMMAND,
-      params: sanitize(params)
+      params: sanitize(params),
+      options: {}
     });
   });
 });

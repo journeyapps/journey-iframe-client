@@ -23,6 +23,8 @@ let result = await client.post('sum', 19, 23);
 console.log(`The answer to life, the universe and everything is ${result}`);
 ```
 
+> *Note*: `.post` calls that take a long time to resolve will cause the JourneyApps Container to bring up a blocking spinner. To make a `.post` call without bringing up a blocking spinner, use `.postNonBlocking`
+
 ```javascript
 // In your view's JS
 
@@ -63,6 +65,10 @@ function sendTasksToClient() {
 
 ```typescript
 post(cmd: string, param1?: any, ..., paramN?: any) : Promise<any>
+```
+
+```typescript
+postNonBlocking(cmd: string, param1?: any, ..., paramN?: any) : Promise<any>
 ```
 
 ```typescript
