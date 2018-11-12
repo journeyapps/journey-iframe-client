@@ -1,6 +1,6 @@
 ## journey-iframe-client
 
-[![CircleCI](https://circleci.com/gh/journeyapps/journey-iframe-client.svg?style=svg)](https://circleci.com/gh/journeyapps/journey-iframe-client)
+[![npm version](https://badge.fury.io/js/journey-iframe-client.svg)](https://badge.fury.io/js/journey-iframe-client) [![CircleCI](https://circleci.com/gh/journeyapps/journey-iframe-client.svg?style=svg)](https://circleci.com/gh/journeyapps/journey-iframe-client)
 
 A library used inside of an HTML component in a JourneyApps app to enable sending messages to and receiving messages from the JourneyApps Container.
 
