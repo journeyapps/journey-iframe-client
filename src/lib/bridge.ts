@@ -28,10 +28,11 @@ export class Bridge {
   private async _post(message: PostMessage) {
     return this.proxy.postMessage<PostMessageResponse>(this.target, message);
   }
-  async post(command: string, params: any[] = []) {
+  async post(command: string, params: any[] = [], options = {}) {
     return this._post({
       command: command,
-      params
+      params,
+      options
     });
   }
 }

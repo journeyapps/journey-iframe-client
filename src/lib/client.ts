@@ -15,8 +15,16 @@ export default class JourneyIFrameClient {
     this.callbacks = {};
   }
   async post(expression: string, ...params: any[]) {
+    return this._performPost(expression, params);
+  }
+  async postNonBlocking(expression: string, ...params: any[]) {
+    return this._performPost(expression, params, {
+      nonBlocking: true
+    });
+  }
+  async _performPost(expression: string, params: any[] = [], options = {}) {
     try {
-      return (await this.bridge.post(expression, params)).result;
+      return (await this.bridge.post(expression, params, options)).result;
     } catch (e) {
       if (e.error) {
         // Journey error. Strip windowPostMessageProxy info and return
