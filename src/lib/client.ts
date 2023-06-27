@@ -33,7 +33,11 @@ export default class JourneyIFrameClient {
       return Promise.reject(e);
     }
   }
+
   on(command: string, cb: (message) => any) {
     this.callbacks[command] = cb;
+    return () => {
+      delete this.callbacks[command];
+    }
   }
 }
