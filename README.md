@@ -28,11 +28,13 @@ console.log(`The answer to life, the universe and everything is ${result}`);
 ```javascript
 // In your view's JS
 
-component.html().on('sum', function(p1, p2) {
+let dispose = component.html().on('sum', function(p1, p2) {
   return p1 + p2;
 });
-```
 
+// to stop listening
+dispose();
+```
 
 
 > *Note*: `.on` handlers can be initialized anywhere in your view's JS, as long as it happens before messages are posted to them. If you need the handler ready from the view's initialization, initialize them in the view's `init()` function.
